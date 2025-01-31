@@ -1,6 +1,6 @@
 import {Countries, InfoOfCountries} from "./types";
 import ArrayOfCountries from "./components/ArrayOfCountries/ArrayOfCountries.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const countriesFetch = async (): Promise<Countries[]> => {
     try {
@@ -27,7 +27,28 @@ const InfoOfCountriesFetch = async (code: string): Promise<InfoOfCountries | nul
 const App = () => {
     const [countries, setCountries] = useState<Countries[]>([]);
     const [onClicked, onClickedCountry] = useState<string | null>(null);
-    const [countryDetails, setCountryDetails] = useState<InfoOfCountries | null>(null);
+    const [countryInfos, setCountryInfos] = useState<InfoOfCountries | null>(null);
+
+    useEffect(() => {
+        const loadCountries = async () => {
+            const countriesData = await countriesFetch();
+            setCountries(countriesData);
+        };
+
+        loadCountries();
+    }, []);
+
+
+    useEffect(() => {
+        const loadCountryDetails = async () => {
+            if (onClicked) {
+                const details = await InfoOfCountriesFetch(onClicked);
+                setCountryInfos(details);
+            }
+        };
+
+        loadCountryDetails();
+    }, [onClicked]);
     return (
         <div className="container mt-5">
             <div className="row">
