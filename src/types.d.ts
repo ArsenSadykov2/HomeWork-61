@@ -3,7 +3,7 @@ export interface Countries {
     name: string;
 }
 
-export interface InfoOfCountries {
+export interface InfoOfCountrieses {
     name: string;
     capital: string;
     population: number;

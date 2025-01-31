@@ -1,6 +1,7 @@
-import {Countries, InfoOfCountries} from "./types";
+import {Countries, InfoOfCountrieses} from "./types";
 import ArrayOfCountries from "./components/ArrayOfCountries/ArrayOfCountries.tsx";
 import {useEffect, useState} from "react";
+import InfoOfCountries from "./components/InfoOfCountries/InfoOfCountries.tsx";
 
 const countriesFetch = async (): Promise<Countries[]> => {
     try {
@@ -13,7 +14,7 @@ const countriesFetch = async (): Promise<Countries[]> => {
     }
 };
 
-const InfoOfCountriesFetch = async (code: string): Promise<InfoOfCountries | null> => {
+const InfoOfCountriesFetch = async (code: string): Promise<InfoOfCountrieses | null> => {
     try {
         const response = await fetch(`https://restcountries.com/v2/alpha/${code}`);
         const data = await response.json();
@@ -27,7 +28,7 @@ const InfoOfCountriesFetch = async (code: string): Promise<InfoOfCountries | nul
 const App = () => {
     const [countries, setCountries] = useState<Countries[]>([]);
     const [onClicked, onClickedCountry] = useState<string | null>(null);
-    const [countryInfos, setCountryInfos] = useState<InfoOfCountries | null>(null);
+    const [countryInfos, setCountryInfos] = useState<InfoOfCountrieses | null>(null);
 
     useEffect(() => {
         const loadCountries = async () => {
@@ -53,6 +54,7 @@ const App = () => {
         <div className="container mt-5">
             <div className="row">
                 <ArrayOfCountries countries={countries} onClicked={onClicked} onClickedCountry={onClickedCountry} />
+                <InfoOfCountries infoOfCountries={countryInfos}/>
             </div>
         </div>
     );
