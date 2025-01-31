@@ -1,5 +1,6 @@
-import React from 'react';
 import {Countries, InfoOfCountries} from "./types";
+import ArrayOfCountries from "./components/ArrayOfCountries/ArrayOfCountries.tsx";
+import {useState} from "react";
 
 const countriesFetch = async (): Promise<Countries[]> => {
     try {
@@ -24,9 +25,14 @@ const InfoOfCountriesFetch = async (code: string): Promise<InfoOfCountries | nul
 };
 
 const App = () => {
+    const [countries, setCountries] = useState<Countries[]>([]);
+    const [onClicked, onClickedCountry] = useState<string | null>(null);
+    const [countryDetails, setCountryDetails] = useState<InfoOfCountries | null>(null);
     return (
-        <div>
-            
+        <div className="container mt-5">
+            <div className="row">
+                <ArrayOfCountries countries={countries} onClicked={onClicked} onClickedCountry={onClickedCountry} />
+            </div>
         </div>
     );
 };
